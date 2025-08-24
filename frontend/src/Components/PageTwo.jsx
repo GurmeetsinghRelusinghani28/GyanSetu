@@ -1,14 +1,13 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF } from "@react-three/drei";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, Suspense } from "react";
 import { useScroll, motion } from "framer-motion";
 import ShinyText from "./ShinyTexts/ShinyText";
-
-// import { TextGenerateEffectDemo } from "./TextGenerateEffectDemo";
-
 import "./PageTwo.css";
 
-// Define a reusable rotating component
+// =========================
+// Rotating wrapper for models
+// =========================
 function RotatingModel({ children, speed = 0.01 }) {
   const groupRef = useRef();
 
@@ -21,10 +20,12 @@ function RotatingModel({ children, speed = 0.01 }) {
   return <group ref={groupRef}>{children}</group>;
 }
 
-// Moving Canvas Wrapper
+// =========================
+// Moving Canvas wrapper
+// =========================
 function MovingCanvas({ children, direction = "left", speedFactor = 900 }) {
   const { scrollYProgress } = useScroll();
-  const [xPosition, setXPosition] = useState(direction === "left" ? -200 : 200); // Start position
+  const [xPosition, setXPosition] = useState(direction === "left" ? -200 : 200);
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (latest) => {
@@ -37,139 +38,148 @@ function MovingCanvas({ children, direction = "left", speedFactor = 900 }) {
 
   return (
     <motion.div
-      style={{
-        transform: `translateX(${xPosition}px)`, // Move Canvas
-        transition: "transform 0.1s linear",
-      }}
+      animate={{ x: xPosition }}
+      transition={{ duration: 0.1, ease: "linear" }}
     >
       {children}
     </motion.div>
   );
 }
 
-// Define the models
-function Om() {
-  const { scene } = useGLTF("/om_symbol.glb");
-  return <primitive object={scene} scale={1.5} />;
+// =========================
+// Generic model loader
+// =========================
+function Model({ url, scale = 1, position = [0, 0, 0] }) {
+  const { scene } = useGLTF(url);
+  return <primitive object={scene} scale={scale} position={position} />;
 }
 
-function Khanda() {
-  const { scene } = useGLTF("/khanda.glb");
-  return <primitive object={scene} scale={3.5} position={[0, -0.4, 0]} />;
-}
+// =========================
+// Preload Models
+// =========================
+const MODEL_URLS = {
+  om: "https://res.cloudinary.com/dst3yuj1w/image/upload/v1756030176/om_symbol_w2votg.glb",
+  khanda: "https://res.cloudinary.com/dst3yuj1w/image/upload/v1756030169/khanda_xis84u.glb",
+  quran: "https://res.cloudinary.com/dst3yuj1w/image/upload/v1756030170/quran_bzjhfc.glb",
+  cross: "https://res.cloudinary.com/dst3yuj1w/image/upload/v1756030170/cross_mwancw.glb",
+};
 
-function Kuran() {
-  const { scene } = useGLTF("/quran.glb");
-  return <primitive object={scene} scale={3} />;
-}
-
-function Cross() {
-  const { scene } = useGLTF("/cross.glb");
-  return <primitive object={scene} scale={2.5} />;
-}
-
-// Preload models for better performance
-useGLTF.preload("/om_symbol.glb");
-useGLTF.preload("/khanda.glb");
-useGLTF.preload("/quran.glb");
-useGLTF.preload("/cross.glb");
+useGLTF.preload(MODEL_URLS.om);
+useGLTF.preload(MODEL_URLS.khanda);
+useGLTF.preload(MODEL_URLS.quran);
+useGLTF.preload(MODEL_URLS.cross);
 
 export default function PageTwo() {
   return (
-    <div data-scroll data-scroll-translate="0 -100" data-scroll-speed="0.9" className="Page2 ">
-      
+    <div
+      data-scroll
+      data-scroll-translate="0 -100"
+      data-scroll-speed="0.9"
+      className="Page2 "
+    >
       {/* Background Video */}
       <video autoPlay loop muted playsInline className="background-video">
         <source src="./Assets/background_black.mp4" type="video/mp4" />
       </video>
 
       <div className="CanvasContainer">
-
-      <video autoPlay loop muted playsInline className="background-video">
-        <source src="./Assets/background_black.mp4" type="video/mp4" />
-      </video>
-
-        
         {/* Om Symbol (Moves Left to Right) */}
         <MovingCanvas direction="left">
-          <div className="om">
+          <div className="om hidden md:block">
             <Canvas camera={{ position: [0, 0, 18], fov: 75 }}>
-              <ambientLight intensity={3} />
-              <directionalLight position={[0, 5, 10]} intensity={9} />
-              <pointLight position={[0, 2, 5]} intensity={1.5} />
+              <ambientLight intensity={1} />
+              <directionalLight position={[0, 5, 10]} intensity={7.5} />
               <OrbitControls enableZoom={false} />
-              <sphereGeometry args={[1, 32, 32]} />
-              <meshStandardMaterial metalness={1} roughness={0.2} color="gray" />
-              <RotatingModel>
-                <Om />
-              </RotatingModel>
+              <Suspense fallback={null}>
+                <RotatingModel>
+                  <Model url={MODEL_URLS.om} scale={1.5} />
+                </RotatingModel>
+              </Suspense>
             </Canvas>
           </div>
         </MovingCanvas>
 
-        <ShinyText text="We are followers of an ancient and sacred way of life, deeply rooted in the principles of Dharma (righteousness), Karma (actions and consequences), and Moksha (liberation). Our faith teaches us the importance of devotion, respect for all living beings, and harmony with nature. We celebrate grand festivals like Diwali, Holi, and Navratri, where we come together with joy and devotion. Our sacred texts—the Vedas, Upanishads, and Bhagavad Gita—guide us in our spiritual journey. Temples are not just places of worship but centers of community and culture, where we seek divine blessings and inner peace.
-" disabled={false} speed={3} className='custom-class' />
-
-
-        {/* <TextGenerateEffectDemo/> */}
+<ShinyText
+  text="We follow an ancient path rooted in Dharma (righteousness), Karma (actions), and Moksha (liberation). Our faith values devotion, respect for all beings, and harmony with nature. Festivals like Diwali, Holi, and Navratri bring joy and community, guided by sacred texts like the Vedas, Upanishads, and Bhagavad Gita."
+  disabled={false}
+  speed={3}
+  className="custom-class  transform -translate-y-[50px] sm:pt-[180px]"
+/>
 
 
         {/* Khanda Symbol (Moves Right to Left) */}
-        <MovingCanvas direction="right">
-          <div className="khanda">
-            <Canvas camera={{ position: [0, 0, 1.5], fov: 75 }}>
-              <ambientLight intensity={3} />
-              <directionalLight position={[0, 5, 10]} intensity={2} />
-              <pointLight position={[0, 2, 5]} intensity={1.5} />
-              <OrbitControls enableZoom={false} />
-              <sphereGeometry args={[1, 32, 32]} />
-              <meshStandardMaterial metalness={9} roughness={0.2} color="gray" />
-              <RotatingModel>
-                <Khanda />
-              </RotatingModel>
-            </Canvas>
-          </div>
-        </MovingCanvas>
-        <ShinyText text="We walk the path shown by Guru Nanak and the ten Sikh Gurus, who taught us the values of selfless service (Seva), devotion (Naam Japna), and honest living (Kirat Karni). Our holy scripture, Guru Granth Sahib, is not just a book—it is our eternal Guru, guiding us in every step of life. We believe in equality and stand against injustice, protecting the weak and upholding righteousness. Every Gurdwara is open to all, serving free meals (Langar) to anyone, regardless of caste or faith. Our festivals, such as Gurpurab and Baisakhi, celebrate the spirit of faith, courage, and unity. 
-" disabled={false} speed={3} className='custom-class' />
+<MovingCanvas direction="right">
+  <div className="khanda hidden md:block">
+    <Canvas camera={{ position: [0, 0, 1.5], fov: 75 }}>
+      <ambientLight intensity={1} />
+      <directionalLight position={[0, 5, 10]} intensity={7.5} />
+      <OrbitControls enableZoom={false} />
+      <Suspense fallback={null}>
+        <RotatingModel>
+          <Model
+            url={MODEL_URLS.khanda}
+            scale={3.5}
+            position={[0, -0.4, 0]}
+          />
+        </RotatingModel>
+      </Suspense>
+    </Canvas>
+  </div>
+</MovingCanvas>
+<ShinyText
+  text="We follow the path of Guru Nanak and the ten Sikh Gurus, embracing selfless service (Seva), devotion (Naam Japna), and honest living (Kirat Karni). Guru Granth Sahib guides us, Gurdwaras welcome all, and festivals like Gurpurab and Baisakhi celebrate faith, courage, and unity."
+  disabled={false}
+  speed={3}
+  className="custom-class transform -translate-y-[130px] sm:pt-[380px]"
+/>
 
-        {/* Kuran Symbol (Moves Left to Right) */}
-        <MovingCanvas direction="left">
-          <div className="quran">
-            <Canvas camera={{ position: [0, 1, 0], fov: 50 }}>
-              <ambientLight intensity={3} />
-              <directionalLight position={[0, 5, 10]} intensity={2} />
-              <pointLight position={[0, 2, 5]} intensity={1.5} />
-              <OrbitControls enableZoom={false} />
-              <sphereGeometry args={[1, 32, 32]} />
-              <meshStandardMaterial metalness={1} roughness={0.2} color="gray" />
-              <RotatingModel>
-                <Kuran />
-              </RotatingModel>
-            </Canvas>
-          </div>
-        </MovingCanvas>
-        <ShinyText text="We live by the teachings of the Holy Quran and the guidance of our beloved Prophet Muhammad (peace be upon him). Our faith is built on five pillars—Shahada (faith), Salah (prayer), Zakat (charity), Sawm (fasting), and Hajj (pilgrimage). Through our daily prayers, we stay connected to Allah, seeking His mercy and blessings. Ramadan is a time of fasting, reflection, and gratitude, while Eid-ul-Fitr and Eid-ul-Adha bring us together in celebration and giving. Brotherhood, humility, and service to humanity define who we are, as we strive to spread peace and kindness in the world.
-" disabled={false} speed={3} className='custom-class' />
 
-        {/* Cross Symbol (Moves Right to Left) */}
-        <MovingCanvas direction="right">
-          <div className="cross">
-            <Canvas camera={{ position: [0, 0, 4], fov: 75 }}>
-              <ambientLight intensity={3} />
-              <directionalLight position={[0, 7, 5]} intensity={69} castShadow />
-              <pointLight position={[0, 3, 5]} intensity={14} />
-              <OrbitControls enableZoom={false} />
-              <sphereGeometry args={[1, 32, 32]} />
-              <meshStandardMaterial metalness={5} roughness={0.2} color="gray" />
-              <RotatingModel>
-                <Cross />
-              </RotatingModel>
-            </Canvas>
-          </div>
-        </MovingCanvas>
-        <ShinyText text="We follow the path of love, compassion, and forgiveness, as taught by Jesus Christ. The Bible is our guiding light, teaching us to serve others, be kind, and spread peace. Our faith is built on hope, prayer, and trust in God’s plan. Christmas brings the joy of giving, while Easter reminds us of sacrifice and resurrection. We believe in supporting our communities through education, healthcare, and charity. Whether through churches, schools, or hospitals, we strive to help those in need, living by the words of Christ.
-" disabled={false} speed={3} className='custom-class' />
+{/* Kuran Symbol (Moves Left to Right) */}
+<MovingCanvas direction="left">
+  <div className="quran hidden md:block tranform -translate-y-1/2">
+    <Canvas camera={{ position: [0, 1, 0], fov: 50 }}>
+      <ambientLight intensity={1} />
+      <directionalLight position={[0, 5, 10]} intensity={7.5} />
+      <OrbitControls enableZoom={false} />
+      <Suspense fallback={null}>
+        <RotatingModel>
+          <Model url={MODEL_URLS.quran} scale={3} />
+        </RotatingModel>
+      </Suspense>
+    </Canvas>
+  </div>
+</MovingCanvas>
+<ShinyText
+  text="We follow the teachings of the Holy Quran and Prophet Muhammad (peace be upon him). Our faith rests on the five pillars—Shahada, Salah, Zakat, Sawm, and Hajj. Ramadan, Eid-ul-Fitr, and Eid-ul-Adha bring reflection, gratitude, and celebration, while brotherhood, humility, and service guide our lives."
+  disabled={false}
+  speed={3}
+  className="custom-class transform -translate-y-[190px] sm:pt-[380px]"
+/>
+
+
+{/* Cross Symbol (Moves Right to Left) */}
+<MovingCanvas direction="right">
+  <div className="cross hidden md:block tranform -translate-y-[200px]">
+    <Canvas camera={{ position: [0, 0, 4], fov: 75 }}>
+      <ambientLight intensity={1} />
+      <directionalLight position={[0, 5, 10]} intensity={7.5} />
+      <OrbitControls enableZoom={false} />
+      <Suspense fallback={null}>
+        <RotatingModel>
+          <Model url={MODEL_URLS.cross} scale={2.5} />
+        </RotatingModel>
+      </Suspense>
+    </Canvas>
+  </div>
+</MovingCanvas>
+<ShinyText
+  text="We follow the path of love, compassion, and forgiveness as taught by Jesus Christ. The Bible guides us to serve, be kind, and spread peace. Christmas and Easter remind us of giving, sacrifice, and hope, while we support communities through education, healthcare, and charity."
+  disabled={false}
+  speed={3}
+  className="custom-class transform -translate-y-[260px] sm:pt-[380px]"
+/>
+
+
       </div>
     </div>
   );

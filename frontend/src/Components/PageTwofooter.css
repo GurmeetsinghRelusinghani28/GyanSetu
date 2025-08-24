@@ -2,6 +2,48 @@
     background-color: black;
 }
 
+
+/* Small devices (sm) - ≥ 640px */
+@media (min-width: 640px) {
+  .sm\:block {
+    display: block;
+  }
+  .sm\:hidden {
+    display: none;
+  }
+}
+
+/* Medium devices (md) - ≥ 768px */
+@media (min-width: 768px) {
+  .md\:block {
+    display: block;
+  }
+  .md\:hidden {
+    display: none;
+  }
+}
+
+/* Large devices (lg) - ≥ 1024px */
+@media (min-width: 1024px) {
+  .lg\:block {
+    display: block;
+  }
+  .lg\:hidden {
+    display: none;
+  }
+}
+
+/* Extra Large (xl) - ≥ 1280px */
+@media (min-width: 1280px) {
+  .xl\:block {
+    display: block;
+  }
+  .xl\:hidden {
+    display: none;
+  }
+}
+
+
 .vortex-demo {
     width: calc(100% - 4rem);
     margin: auto;

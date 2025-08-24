@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 
 const PageTwofooter = () => {
   return (
-    <div className="footer-container">
+    <div className="footer-container translate-y-[10px] relative z-10">
       <Vortex particleCount={190} backgroundColor="#00000" baseHue={200} />
     </div>
   );
