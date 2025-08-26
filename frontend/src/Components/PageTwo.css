@@ -134,7 +134,7 @@
         width: 160px; /* Set fixed width */
         height: 160px; /* Set fixed height */
         overflow: hidden; /* Prevents infinite expansion */
-        margin-top: 60px;
+        /* margin-top: 20px; */
         transform: translateX(300px);
     }
     .quran {
@@ -142,7 +142,7 @@
         height: 160px; /* Set fixed height */
         overflow: hidden; /* Prevents infinite expansion */
         transform: translateX(-400px);
-        margin-top: 100px;
+        /* margin-top: 100px; */
 
     }
     .cross {
@@ -185,7 +185,7 @@
     margin-top: 10px;
     margin-right: 300px;
     border-radius: 11px;
-    padding: 6px;
+    padding: 3px;
 }
 
 .right-content{
@@ -197,7 +197,7 @@
     margin-top: 20px;
     margin-left: 300px;
     border-radius: 11px;
-    padding: 6px;
+    padding: 3px;
 }
 
     .card-container {

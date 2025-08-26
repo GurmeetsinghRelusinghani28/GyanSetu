@@ -10,7 +10,7 @@ const AboutUs = () => {
 
   return (
     <div>
-    <span className="translate-x-[51px] translate-y-[38px] flex flex-row"><ArrowBackIcon color="primary" fontSize="medium" />
+    <span className=" translate-x-[21px] translate-y-[18px] sm:translate-x-[51px] translate-y-[38px] flex flex-row "><ArrowBackIcon color="primary" fontSize="medium" />
     &nbsp;<p onClick={()=>navigate("/")} className=" text-blue-500">Go back</p></span>
     <section className="aboutus-bg-orange-200 aboutus-min-h-screen aboutus-flex aboutus-flex-col aboutus-items-center aboutus-py-12 aboutus-px-6">
       {/* Heading */}

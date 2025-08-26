@@ -170,7 +170,7 @@ export const Vortex = (props) => {
         <canvas ref={canvasRef}></canvas>
       </motion.div>
       <div className="vortex-content">{props.children}</div>
-      <button className="shimmer-btn" onClick={() => navigate("/login")}>Explore GyanSetu!</button>
+      <button className="flex justify-between relative left-[43%] right-[43%] bottom-[50%] transform -translate-y-[100px]  items-center bg-slate-800 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"  onClick={() => navigate("/login")}>Explore GyanSetu!</button>
     </div>
   );
 };

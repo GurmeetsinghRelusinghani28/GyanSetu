@@ -20,14 +20,15 @@ const LandingPage = () => {
         setOpenCalendar(!openCalendar);
     };
     return (
-        <>
-            <Navbar toggleCalendar={toggleCalendar}/>
-            <CalendarDrawer open={openCalendar} onClose={toggleCalendar} />
-            <OpeningPage />
-            <PageTwo />
-            <PageTwobottom />
-            <PageTwofooter />
-        </>
+    <>
+    <Navbar toggleCalendar={toggleCalendar} />
+    <CalendarDrawer open={openCalendar} onClose={toggleCalendar} />
+    <OpeningPage />
+    <PageTwo />
+    <PageTwofooter />
+    <PageTwobottom/>
+    </>
+
     );
 };
 
