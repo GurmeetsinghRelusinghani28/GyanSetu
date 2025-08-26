@@ -2,11 +2,13 @@ const { generatePodcastScript } = require("../services/podcastService");
 
 exports.generatePodcast = async (req, res) => {
     const { topic } = req.body;
+    console.log("Topic:", topic);
 
     if (!topic) return res.status(400).json({ error: "Topic is required" });
 
     try {
         const script = await generatePodcastScript(topic);
+        console.log("Script:", script);
         if (!script) return res.status(500).json({ error: "Failed to generate script" });
 
         // const audioPath = await generatePodcastAudio(script, topic);
