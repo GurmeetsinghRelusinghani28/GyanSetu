@@ -4,36 +4,76 @@ body {
     font-family: 'Poppins', 'Inter', sans-serif;
     background-color: #0f0f0f;
     color: #e0e0e0;
+    margin: 0;
+    padding: 0;
 }
 
-
+/* Profile Image */
 .profile-img {
     position: relative;
     width: 80px;
-    height: 80px ;
+    height: 80px;
     border-radius: 50%;
     object-fit: cover;
     margin-left: 60px;
     border: 2px solid #fff;
     box-shadow: 0 0 0 5px #545252;
-    transition: 0.5s;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-#name{
+.profile-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #888;
+}
+
+/* Name & Username */
+#name {
     font-size: 14px;
 }
 
-#username{
+#username {
     font-size: 26px;
-
-
+    font-weight: 600;
+    margin-top: 5px;
 }
-/* h2{
-    font-size: 20px;
-    margin-top: 1px;
-    color: black;
-} */
 
-.button:hover{
-color: black;
+.button:hover {
+    color: black;
+    transition: 0.3s;
+}
+
+/* ============= RESPONSIVE BREAKPOINTS ============= */
+
+/* Tablet View */
+@media (max-width: 768px) {
+    .profile-img {
+        width: 70px;
+        height: 70px;
+        margin-left: 30px;
+    }
+
+    #name {
+        font-size: 13px;
+    }
+
+    #username {
+        font-size: 22px;
+    }
+}
+
+/* Mobile View */
+@media (max-width: 480px) {
+    .profile-img {
+        width: 60px;
+        height: 60px;
+        margin-left: 15px;
+    }
+
+    #name {
+        font-size: 12px;
+    }
+
+    #username {
+        font-size: 18px;
+    }
 }

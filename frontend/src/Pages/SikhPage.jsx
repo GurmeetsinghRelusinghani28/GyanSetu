@@ -17,7 +17,7 @@ import TimeLineDemo2 from "../Components/SikhPageComponents/TimeLineDemo2.jsx"
 // 👇 Import AnimatedDropdown
 import AnimatedDropdown from '../Components/MainPageComponents/dropdown.jsx';
 
-function MuslimPage() {
+function SikhPage() {
 
   useEffect(() => {
     // Inject Botpress Webchat script dynamically
@@ -98,4 +98,4 @@ function MuslimPage() {
   );
 }
 
-export default MuslimPage;
+export default SikhPage;

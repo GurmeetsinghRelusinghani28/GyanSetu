@@ -1,11 +1,10 @@
+
 import { useState } from "react";
 import axios from "axios";
 import { FaMicrophone, FaSpinner } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
-
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const Podcast = () => {
   const [topic, setTopic] = useState("");
@@ -62,54 +61,82 @@ const Podcast = () => {
 
     setLoading(false);
   };
+
   const navigate = useNavigate();
+
   return (
-    <div>
-    <span className="translate-x-[51px] translate-y-[38px] flex flex-row"><ArrowBackIcon color="primary" fontSize="medium" />
-    &nbsp;<p onClick={()=>navigate("/dashboard")} className=" text-blue-500">Go back</p></span>
-    <div className="max-w-xl mx-auto my-12 p-6 bg-gray-900 text-white rounded-lg shadow-lg text-center">
-      <motion.h1
-        className="text-2xl font-bold"
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
+    <div className="min-h-screen bg-gray-950 px-4 py-6 sm:px-6 lg:px-8">
+      {/* Back button */}
+      <div
+        onClick={() => navigate("/dashboard")}
+        className="flex items-center gap-2 mb-6 cursor-pointer hover:opacity-80 transition"
       >
-        🎙️ AI Podcast Generator
-      </motion.h1>
+        <ArrowBackIcon color="primary" fontSize="medium" />
+        <p className="text-blue-400">Go back</p>
+      </div>
 
-      <motion.div className="mt-4" initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
-        <select
-          value={topic}
-          onChange={(e) => setTopic(e.target.value)}
-          className="w-full p-2 bg-gray-800 text-white rounded-md outline-none"
+      {/* Main card */}
+      <div className="max-w-2xl mx-auto p-6 sm:p-8 bg-gray-900 text-white rounded-2xl shadow-xl">
+        <motion.h1
+          className="text-2xl sm:text-3xl font-bold text-center"
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
         >
-          <option value="">Select a topic</option>
-          {topics.map((t, index) => (
-            <option key={index} value={t}>{t}</option>
-          ))}
-        </select>
-      </motion.div>
+          🎙️ AI Podcast Generator
+        </motion.h1>
 
-      <motion.button
-        onClick={generatePodcast}
-        disabled={loading}
-        className="mt-4 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg transition duration-300 disabled:opacity-50"
-        whileHover={{ scale: 1.05 }}
-      >
-        {loading ? <FaSpinner className="animate-spin" /> : <FaMicrophone />} {loading ? "Generating..." : "Generate Podcast"}
-      </motion.button>
-
-      {script && (
-        <motion.div className="mt-6 p-4 bg-gray-800 rounded-lg text-left relative" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <h3 className="text-lg font-semibold">📜 Podcast Script:</h3>
-          <div className="mt-2 p-4 bg-red-500 text-white rounded-lg relative">
-            {script}
-            <div className="absolute left-4 bottom-[-10px] w-0 h-0 border-l-8 border-r-8 border-t-8 border-t-red-500 border-l-transparent border-r-transparent"></div>
-          </div>
+        {/* Select dropdown */}
+        <motion.div
+          className="mt-6"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+        >
+          <select
+            value={topic}
+            onChange={(e) => setTopic(e.target.value)}
+            className="w-full p-3 bg-gray-800 text-white rounded-lg outline-none border border-gray-700 focus:ring-2 focus:ring-red-500"
+          >
+            <option value="">Select a topic</option>
+            {topics.map((t, index) => (
+              <option key={index} value={t}>
+                {t}
+              </option>
+            ))}
+          </select>
         </motion.div>
-      )}
-    </div>
+
+        {/* Generate button */}
+        <motion.button
+          onClick={generatePodcast}
+          disabled={loading}
+          className="mt-6 w-full sm:w-auto px-6 py-3 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed mx-auto"
+          whileHover={{ scale: 1.05 }}
+        >
+          {loading ? <FaSpinner className="animate-spin" /> : <FaMicrophone />}
+          {loading ? "Generating..." : "Generate Podcast"}
+        </motion.button>
+
+        {/* Script Output */}
+        {script && (
+          <motion.div
+            className="mt-8 p-6 bg-gray-800 rounded-lg text-left relative"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <h3 className="text-lg sm:text-xl font-semibold mb-3">
+              📜 Podcast Script:
+            </h3>
+            <div className="p-4 bg-red-500 text-white rounded-lg relative leading-relaxed">
+              {script}
+              {/* little speech bubble pointer */}
+              <div className="absolute left-6 -bottom-2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-t-red-500 border-l-transparent border-r-transparent"></div>
+            </div>
+          </motion.div>
+        )}
+      </div>
     </div>
   );
 };
 
 export default Podcast;
+
