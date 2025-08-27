@@ -1,21 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useScroll, useMotionValueEvent, motion } from "framer-motion";
 import cn from "../lib/utils";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 
-export const StickyScroll = ({
-  content,
-  contentClassName
-}) => {
-  const [activeCard, setActiveCard] = React.useState(0);
+export const StickyScroll = ({ content, contentClassName }) => {
+  const [activeCard, setActiveCard] = useState(0);
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    // uncomment line 13 and comment line 14,15 if you DONT want the overflow container and want to have it change on the entire page scroll
-    target: ref
-    //container: ref,
-    //offset: ["start start", "end start"],
-  });
+  const { scrollYProgress } = useScroll({ target: ref });
   const cardLength = content.length;
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
@@ -29,69 +21,69 @@ export const StickyScroll = ({
     }, 0);
     setActiveCard(closestBreakpointIndex);
   });
+
   const backgroundColors = [
-    "#140d04", // Deep coffee brown with an orange hint 
-    "#241000", // Dark roasted amber  
-    "#3b1c0a", // Rich caramelized brown  
-    "#4e260f", // Burnt orange chocolate  
-    "#693e20", 
-    // Dark sunset orange  
+    "#140d04", "#241000", "#3b1c0a", "#4e260f", "#693e20",
   ];
   const navigate = useNavigate();
 
   return (
-    <div>
-    <div className="fixed top-10 left-10 z-[999] flex items-center space-x-2 cursor-pointer">
-  <ArrowBackIcon color="primary" fontSize="medium" />
-  <p onClick={() => navigate("/dashboard")} className="text-blue-500">
-    Go back
-  </p>
-</div>
+    <div className="w-full min-h-screen">
+      {/* Go Back */}
+      <div className="fixed top-4 left-4 z-[999] flex items-center space-x-2 cursor-pointer">
+        <ArrowBackIcon color="primary" fontSize="medium" />
+        <p onClick={() => navigate("/dashboard")} className="text-blue-500 text-sm sm:text-base">
+          Go back
+        </p>
+      </div>
 
-    <motion.div
-      animate={{
-        backgroundColor: backgroundColors[activeCard % backgroundColors.length],
-      }}
-      className="relative flex w-[100rem] h-full justify-left space-x-10 overflow-y-auto rounded-md p-10"
-      ref={ref}>
-      <div className="div relative flex items-start px-4">
-        <div className="max-w-2xl">
-          {content.map((item, index) => (
-            <div key={item.title + index} className="my-20 translate-x-[100px]">
-              <motion.h2
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: activeCard === index ? 1 : 0.3,
-                }}
-                className="text-2xl font-bold text-slate-100">
-                {item.title}
-              </motion.h2>
-              <motion.p
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: activeCard === index ? 1 : 0.3,
-                }}
-                className="text-1xl mt-10 max-w-sm text-slate-300">
-                {item.description}
-              </motion.p>
-            </div>
-          ))}
-          <div className="h-40" />
+      {/* Main Scroll Container */}
+      <motion.div
+        animate={{
+          backgroundColor: backgroundColors[activeCard % backgroundColors.length],
+        }}
+        className="relative flex flex-col lg:flex-row w-full h-full justify-start lg:space-x-10 overflow-y-auto rounded-md px-4 sm:px-6 lg:px-10"
+        ref={ref}
+      >
+        {/* Text Section */}
+        <div className="relative flex items-start w-full lg:w-2/3">
+          <div className="max-w-xl sm:max-w-2xl">
+            {content.map((item, index) => (
+              <div key={item.title + index} className="my-16 sm:my-20">
+                <motion.h2
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: activeCard === index ? 1 : 0.3 }}
+                  className="text-xl sm:text-2xl font-bold text-slate-100"
+                >
+                  {item.title}
+                </motion.h2>
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: activeCard === index ? 1 : 0.3 }}
+                  className="text-base sm:text-lg mt-6 max-w-sm sm:max-w-md text-slate-300"
+                >
+                  {item.description}
+                </motion.p>
+
+                {/* Show image inline for mobile/tablet */}
+                <div className="mt-6 lg:hidden">{item.content}</div>
+              </div>
+            ))}
+            <div className="h-20 sm:h-40" />
+          </div>
         </div>
-      </div>
-      <div
-        style={{ background:"transparent" }}
-        className={cn(
-          "sticky fixed top-45 right-40 hidden h-80 w-100 overflow-hidden rounded-md bg-white lg:block",
-          contentClassName
-        )}>
-        {content[activeCard].content ?? null}
-      </div>
-    </motion.div>
+
+        {/* Sticky Image Preview (desktop only) */}
+        <div
+          style={{ background: "transparent" }}
+          className={cn(
+            "hidden lg:block sticky top-32 h-80 w-[400px] overflow-hidden rounded-md bg-white shadow-lg",
+            contentClassName
+          )}
+        >
+          {content[activeCard].content ?? null}
+        </div>
+      </motion.div>
     </div>
   );
 };
