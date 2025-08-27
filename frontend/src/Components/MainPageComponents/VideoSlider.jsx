@@ -40,49 +40,51 @@ const VideoSlider = () => {
   };
 
   return (
-    <div className="w-full h-screen flex items-center justify-center bg-black relative">
-      <div className="w-[85%] scale-100">
-        <Slider {...settings}>
-          {slides.map((slide, index) => (
-            <div
-              key={index}
-              className="flex flex-row justify-between items-start bg-black p-10 rounded-lg shadow-lg"
-            >
-              <div className="w-full flex flex-col md:flex-row justify-center items-start gap-8">
-                {/* Video Section */}
-                <div className="w-full md:w-1/2 flex flex-col items-center">
-                  <iframe
-                    className="w-full h-[320px] rounded-lg shadow-md"
-                    src={slide.videoUrl}
-                    title={slide.title}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
+  <div className="w-full min-h-screen flex items-center justify-center bg-black relative">
+    <div className="w-[95%] sm:w-[90%] md:w-[85%]">
+      <Slider {...settings}>
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className="flex flex-col bg-black p-4 sm:p-6 md:p-10 rounded-lg shadow-lg"
+          >
+            <div className="w-full flex flex-col md:flex-row justify-center items-start gap-6 md:gap-8">
+              
+              {/* Video Section */}
+              <div className="w-full md:w-1/2 flex flex-col items-center">
+                <iframe
+                  className="w-full h-[200px] sm:h-[280px] md:h-[320px] lg:h-[400px] rounded-lg shadow-md"
+                  src={slide.videoUrl}
+                  title={slide.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
 
-                  {/* Text Below Video */}
-                  <div className="text-left mt-4">
-                    <h2 className="text-4xl font-bold text-white mb-2">
-                      {slide.title}
-                    </h2>
-                    <p className="text-md text-gray-300">{slide.description}</p>
-                  </div>
+                {/* Text Below Video */}
+                <div className="text-left mt-3 sm:mt-4">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2">
+                    {slide.title}
+                  </h2>
+                  <p className="text-sm sm:text-base md:text-lg text-gray-300 leading-relaxed">
+                    {slide.description}
+                  </p>
                 </div>
+              </div>
 
-                {/* Info Section aligned to top */}
-                <div className="w-full md:w-1/2 flex flex-col text-left">
-  <p className="text-base md:text-lg text-gray-200 leading-relaxed">
-    {slide.information}
-  </p>
-</div>
-
+              {/* Info Section */}
+              <div className="w-full md:w-1/2 flex flex-col text-left mt-4 md:mt-0">
+                <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-200 leading-relaxed">
+                  {slide.information}
+                </p>
               </div>
             </div>
-          ))}
-        </Slider>
-      </div>
+          </div>
+        ))}
+      </Slider>
     </div>
-  );
-};
+  </div>
+);
+}
 
 export default VideoSlider;

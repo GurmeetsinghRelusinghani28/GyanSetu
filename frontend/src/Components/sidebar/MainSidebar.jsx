@@ -63,33 +63,66 @@ export const DesktopSidebar = ({ className, children, ...props }) => {
     </motion.div>
   );
 };
-
 export const MobileSidebar = ({ className, children, ...props }) => {
   const { open, setOpen } = useSidebar();
   return (
-    <div
-      className={cn("h-10 px-4 py-4 flex flex-row md:hidden items-center justify-between bg-neutral-100 dark:bg-neutral-800 w-full")}
-      {...props}
-    >
-      <div className="flex justify-end z-20 w-full">
-        <IconMenu2 className="text-neutral-800 dark:text-neutral-200" onClick={() => setOpen(!open)} />
+    <>
+      {/* Sticky Header (Top bar with menu button) */}
+      <div
+        className={cn(
+          "fixed top-28 left-0 px-4 h-12 flex flex-row md:hidden items-center justify-between bg-neutral-100 dark:bg-neutral-800 w-full shadow-md z-[80]",
+          className
+        )}
+        {...props}
+      >
+        <IconMenu2
+          className="text-neutral-800 dark:text-neutral-200 cursor-pointer"
+          onClick={() => setOpen(!open)}
+        />
       </div>
+
+      {/* Spacer to push main content below header */}
+      <div className="h-12 md:hidden" />
+
+      {/* Sidebar Drawer */}
       <AnimatePresence>
         {open && (
-          <motion.div
-            initial={{ x: "-100%", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: "-100%", opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className={cn("fixed h-full w-full inset-0 bg-white dark:bg-neutral-900 p-10 z-[100] flex flex-col justify-between", className)}
-          >
-            <div className="absolute right-10 top-10 z-50 text-neutral-800 dark:text-neutral-200" onClick={() => setOpen(!open)}>
-              <IconX />
-            </div>
-            {children}
-          </motion.div>
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black z-[90]"
+              onClick={() => setOpen(false)}
+            />
+
+            {/* Sidebar itself */}
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className={cn(
+                "fixed left-0 h-full w-[70%] max-w-xs bg-white dark:bg-neutral-900 p-6 z-[100] flex flex-col shadow-lg",
+                className
+              )}
+            >
+              {/* Close button */}
+              <div
+                className="absolute right-4 top-4 text-neutral-800 dark:text-neutral-200 cursor-pointer"
+                onClick={() => setOpen(false)}
+              >
+                <IconX />
+              </div>
+
+              {/* Sidebar content */}
+              <div className="mt-10">{children}</div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 };

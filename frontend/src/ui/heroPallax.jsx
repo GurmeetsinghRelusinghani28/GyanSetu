@@ -42,7 +42,7 @@ export const HeroParallax = ({ products }) => {
   return (
     <div
       ref={ref}
-      className="h-[300vh] py-10 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[300vh] py-10 overflow-hidden antialiased relative flex flex-col [perspective:1000px] [transform-style:preserve-3d]"
     >
       <Header />
       <motion.div
@@ -53,19 +53,36 @@ export const HeroParallax = ({ products }) => {
           opacity,
         }}
       >
-        <motion.div className="flex flex-row-reverse space-x-reverse -space-x-25 mb-20">
+        {/* Row 1 */}
+        <motion.div className="flex flex-row-reverse space-x-reverse gap-4 sm:gap-6 md:gap-10 mb-10 md:mb-20 px-2 sm:px-4">
           {firstRow.map((product) => (
-            <ProductCard product={product} translate={translateX} key={product.title} />
+            <ProductCard
+              product={product}
+              translate={translateX}
+              key={product.title}
+            />
           ))}
         </motion.div>
-        <motion.div className="flex flex-row -space-x-25 mb-20">
+
+        {/* Row 2 */}
+        <motion.div className="flex flex-row gap-4 sm:gap-6 md:gap-10 mb-10 md:mb-20 px-2 sm:px-4">
           {secondRow.map((product) => (
-            <ProductCard product={product} translate={translateXReverse} key={product.title} />
+            <ProductCard
+              product={product}
+              translate={translateXReverse}
+              key={product.title}
+            />
           ))}
         </motion.div>
-        <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
+
+        {/* Row 3 */}
+        <motion.div className="flex flex-row-reverse space-x-reverse gap-4 sm:gap-6 md:gap-10 px-2 sm:px-4">
           {thirdRow.map((product) => (
-            <ProductCard product={product} translate={translateX} key={product.title} />
+            <ProductCard
+              product={product}
+              translate={translateX}
+              key={product.title}
+            />
           ))}
         </motion.div>
       </motion.div>
@@ -75,36 +92,41 @@ export const HeroParallax = ({ products }) => {
 
 export const Header = () => {
   return (
-<div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0">
-  <h1 className="text-[80px] md:text-[110px] font-extrabold dark:text-white leading-tight text-center">
-    Your Gateway to <br /> Sacred Knowledge
-  </h1>
+    <div className="max-w-7xl relative mx-auto py-10 md:py-20 px-4 w-full left-0 top-0">
+      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold dark:text-white leading-tight text-center">
+        Your Gateway to <br /> Sacred Knowledge
+      </h1>
 
-  <p className="max-w-5xl text-lg md:text-xl mt-8 dark:text-neutral-200 text-center mx-auto">
-    Discover a curated collection of holy books, scriptures, and spiritual classics from various faiths. <br />
-    From Vedas and Puranas to the Bible, Quran, Guru Granth Sahib, and more—<br />
-    we deliver timeless wisdom from diverse religions right to your doorstep.
-  </p>
-</div>
-
+      <p className="max-w-4xl text-sm sm:text-base md:text-lg lg:text-xl mt-6 md:mt-8 dark:text-neutral-200 text-center mx-auto">
+        Discover a curated collection of holy books, scriptures, and spiritual
+        classics from various faiths. <br />
+        From Vedas and Puranas to the Bible, Quran, Guru Granth Sahib, and
+        more— <br className="hidden sm:block" />
+        we deliver timeless wisdom from diverse religions right to your
+        doorstep.
+      </p>
+    </div>
   );
 };
 
 export const ProductCard = ({ product, translate }) => {
   return (
     <motion.div
-      style={{
-        x: translate,
-      }}
-      whileHover={{
-        y: -30, // slight lift on hover
-      }}
+      style={{ x: translate }}
+      whileHover={{ y: -20 }}
       key={product.title}
-      className="group relative h-[550px] w-[350px] shrink-0 overflow-hidden rounded-lg shadow-lg -translate-y-[301px]"
+      className="group relative shrink-0 overflow-hidden rounded-xl shadow-lg 
+      w-[200px] sm:w-[250px] md:w-[300px] lg:w-[350px] 
+      h-[320px] sm:h-[400px] md:h-[480px] lg:h-[550px]"
     >
-      <a href={product.link} target="_blank" rel="noopener noreferrer" className="block h-full">
+      <a
+        href={product.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block h-full"
+      >
         {/* Book Thumbnail Image */}
-        <div className="relative h-full w-full overflow-hidden -translate-y-[41px]">
+        <div className="relative h-full w-full overflow-hidden">
           <img
             src={product.thumbnail}
             className="object-cover absolute h-full w-full inset-0 transition-transform duration-500 transform group-hover:scale-110"
@@ -112,12 +134,20 @@ export const ProductCard = ({ product, translate }) => {
           />
 
           {/* Overlay on hover */}
-          <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-80 transition-opacity duration-500 flex flex-col justify-center items-center text-center p-4 max-w-[260px]">
-            <h3 className="text-xl font-bold text-white mb-2">{product.title}</h3>
-            <p className="text-yellow-400 mb-1">Rating: ★★★★★</p>
-            <p className="text-white mb-2">{product.price}</p>
-            <p className="text-gray-300 text-sm mb-4">{product.description}</p>
-            <button className="bg-blue-500 hover:bg-blue-600 hover:opacity-100 text-white px-4 py-2 rounded">
+          <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-90 transition-opacity duration-500 flex flex-col justify-center items-center text-center p-3 sm:p-4">
+            <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-2">
+              {product.title}
+            </h3>
+            <p className="text-yellow-400 text-xs sm:text-sm mb-1">
+              Rating: ★★★★★
+            </p>
+            <p className="text-white text-sm sm:text-base mb-2">
+              {product.price}
+            </p>
+            <p className="text-gray-300 text-xs sm:text-sm mb-4 line-clamp-3">
+              {product.description}
+            </p>
+            <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 sm:px-4 sm:py-2 text-sm sm:text-base rounded">
               Buy Now
             </button>
           </div>

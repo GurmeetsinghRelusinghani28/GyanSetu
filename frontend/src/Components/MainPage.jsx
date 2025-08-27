@@ -9,8 +9,7 @@ import VideoSlider from "../Components/MainPageComponents/VideoSlider.jsx";
 import ScrollVelocity from "./MainPageComponents/ScrollVelocity.jsx";
 import TimeLineDemo from "./Timeline/TimeLineDemo.jsx";
 import News from "../Pages/News.jsx";
-import AnimatedDropdown from "./MainPageComponents/dropdown.jsx"; // Import dropdown
-
+import AnimatedDropdown from "./MainPageComponents/dropdown.jsx";
 
 function MainPage() {
   console.log("MainPage component loaded!");
@@ -34,56 +33,60 @@ function MainPage() {
   }, []);
 
   return (
-    <div>
+    <div className="w-full min-h-screen flex flex-col">
       {/* Header Section */}
-      <div className="z-[60] pt-2 flex flex-row relative justify-between w-full items-center">
-  {/* BhagwatGita Link + Dropdown */}
-  <div className="flex flex-row items-center pl-150">
-    <a
-      href="https://bhagavadgita.io/"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <GradientText
-        colors={["#ffba08", "#d00000", "#ffba08", "#d00000", "#ffba08"]}
-        animationSpeed={4.5}
-        showBorder={false}
-        style={{
-          fontFamily: "'Cinzel Decorative', serif",
-        }}
-      >
-        BhagwatGita
-      </GradientText>
-    </a>
+      <div className="fixed top-0 left-0 w-full z-[100] bg-black
+                py-4 sm:py-2 px-2 flex justify-between items-center">
 
-    {/* Animated Dropdown exactly like SikhPage */}
-  </div>
-  
-        {/* Icons */}
+        {/* BhagwatGita Link */}
+        <div className="flex flex-row justify-center">
+          <a
+            href="https://bhagavadgita.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block"
+          >
+            <GradientText
+              colors={["#ffba08", "#d00000", "#ffba08", "#d00000", "#ffba08"]}
+              animationSpeed={4.5}
+              showBorder={false}
+              style={{
+                fontFamily: "'Cinzel Decorative', serif",
+                fontSize: "clamp(1rem, 4vw, 2rem)", // responsive font size
+              }}
+            >
+              BhagwatGita
+            </GradientText>
+          </a>
+        </div>
 
-
-        <div className="pr-4 gap-2 icons flex flex-row-reverse">
-          <ShoppingCartIcon className="text-blue-500" fontSize="large" />
-          <FavoriteIcon className="text-red-600" fontSize="large" />
-          <div>        <AnimatedDropdown />
+        {/* Icons + Dropdown */}
+        <div className="flex flex-row items-center gap-2 sm:gap-3 md:gap-4">
+          <ShoppingCartIcon className="text-blue-500" fontSize="medium" />
+          <FavoriteIcon className="text-red-600" fontSize="medium" />
+          <div className="block sm:block">
+            <AnimatedDropdown />
           </div>
         </div>
       </div>
 
+
       {/* Main Content */}
-      <div className="flex h-full w-screen">
+      <div className="flex flex-col lg:flex-row w-full h-auto lg:h-screen mt-30">
         {/* Sidebar */}
-        <div className="z-[100]">
+        <div className="z-[90] w-full lg:w-auto">
           <SidebarDemo />
         </div>
 
-        {/* Image Slider */}
-        <div className="flex-1 relative z-[50] w-1/2">
+        {/* Video Slider */}
+        <div className="flex-1 relative z-[50] w-full lg:w-1/2">
           <VideoSlider />
         </div>
       </div>
 
-      <Ecommerce />
+
+      {/* Sections */}
+      {/* <Ecommerce /> */}
       <News />
 
       <ScrollVelocity
@@ -92,6 +95,7 @@ function MainPage() {
         className="custom-scroll-text"
         color="orange-red"
       />
+
       <MusicCardContainer />
       <TimeLineDemo />
     </div>
