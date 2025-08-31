@@ -59,9 +59,7 @@ function CristianPage() {
         </div>
 
         {/* Icons + Dropdown */}
-        <div className="flex flex-row items-center gap-2 sm:gap-3 md:gap-4">
-          <ShoppingCartIcon className="text-blue-500" fontSize="medium" />
-          <FavoriteIcon className="text-red-600" fontSize="medium" />
+        <div className="flex flex-row items-center sm:gap-3 md:gap-4">
           <div className="block sm:block">
             <AnimatedDropdown />
           </div>

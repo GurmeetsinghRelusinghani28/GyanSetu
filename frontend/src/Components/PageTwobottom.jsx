@@ -4,6 +4,7 @@ import { div } from 'framer-motion/client';
 "use client";
 import { useEffect, useRef } from "react";
 import LocomotiveScroll from "locomotive-scroll";
+import AltPageTwo from './AltPageTwo';
 
 
 
@@ -25,7 +26,7 @@ function PageTwobottom() {
 
 return (
     <>
-    <div className='containers'>    
+    <div className='containers '>    
         <span className="Title">
             <h1>Also Explore..</h1>
         </span>
@@ -105,6 +106,7 @@ return (
             </div>
         </div>
     </div>
+    <AltPageTwo/>
     </>
     );
 }

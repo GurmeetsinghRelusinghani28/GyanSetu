@@ -26,7 +26,7 @@ const AnimatedDropdown = () => {
   };
 
   return (
-    <div className="relative w-full max-w-[250px] sm:w-[250px] ml-2 sm:ml-6">
+    <div className="relative w-full max-w-[190px] sm:w-[250px] ml-2 sm:ml-6">
       {/* Dropdown Button */}
       <button
         onClick={toggleDropdown}
@@ -36,7 +36,7 @@ const AnimatedDropdown = () => {
                    text-white rounded-lg shadow-md"
       >
         <span className="truncate text-left">
-          Want to explore other religions?
+          Explore other religions?
         </span>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}

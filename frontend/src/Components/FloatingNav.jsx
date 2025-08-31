@@ -1,66 +1,67 @@
 "use client";
-import React, { useState } from "react";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useMotionValueEvent,
-} from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
-import "./FloatingNav.css";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const FloatingNav = ({ navItems = [], className = "", toggleCalendar }) => {
-  const { scrollYProgress } = useScroll();
-  const [visible, setVisible] = useState(false);
+const FloatingNav = ({ toggleCalendar }) => {
   const navigate = useNavigate();
 
-  useMotionValueEvent(scrollYProgress, "change", (current) => {
-    if (typeof current === "number") {
-      let direction = current - scrollYProgress.getPrevious();
-      if (scrollYProgress.get() < 0.05) {
-        setVisible(false);
-      } else {
-        setVisible(direction < 0);
-      }
-    }
-  });
-
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        initial={{ opacity: 1, y: -100 }}
-        animate={{ y: visible ? 0 : -100, opacity: visible ? 1 : 0 }}
-        transition={{ duration: 0.2 }}
-        className={`floating-nav ${className}`}
-      >
-        {navItems.map((navItem, idx) => (
-          <Link key={idx} to={navItem.link} className="nav-link">
-            <span className="nav-icon">{navItem.icon}</span>
-            <span className="nav-text">{navItem.name}</span>
-          </Link>
-        ))}
-        <button className="login-button" id="calendar" onClick={(e) => {
-          e.stopPropagation(); 
-          toggleCalendar();
-        }}>
-          <span>Calendar</span>
+    <div
+className=" fixed hidden lg:block text-2xl md:text-[15px] top-4 left-1/4 right-1/4 z-[9999] 
+           bg-blue-300 shadow-md rounded-[51px] 
+           items-center justify-center px-6 py-3"
+
+    >
+      <div className="flex justify-around items-center gap-6 flex-wrap">
+        <button
+          className="px-3 py-2 text-black hover:text-black hover:bg-blue-400 
+                     transition ease-in-out hover:scale-[1.1] duration-300 rounded-[32px]"
+          id="calendar"
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleCalendar();
+          }}
+        >
+          Calendar
         </button>
 
+        <button
+          className="px-3 py-2 text-black hover:text-black hover:bg-blue-400 
+                     transition ease-in-out hover:scale-[1.1] duration-300 rounded-[32px]"
+          id="about"
+          onClick={() => navigate("/about")}
+        >
+          About
+        </button>
 
-        <button className="login-button" id="about" onClick={() => navigate("/about")}>
-          <span>About</span>
+        <button
+      className="px-3 py-2 text-black hover:text-black hover:bg-blue-400 
+                     transition ease-in-out hover:scale-[1.1] duration-300 rounded-[32px]"
+          id="home"
+          onClick={() => navigate("/")}
+        >
+          Home
         </button>
-        <button className="login-button" id="home" onClick={() => navigate("/login")}>
-          <span>Home</span>
+
+        <button
+        className="px-3 py-2 text-black hover:text-black hover:bg-blue-400 
+                     transition ease-in-out hover:scale-[1.1] duration-300 rounded-[32px]"
+          id="contact"
+          onClick={() => navigate("/contact")}
+        >
+          Contact Us
         </button>
-        <button className="login-button" id="contact" onClick={() => navigate("/contact")}>
-          <span>Contact Us</span>
+
+        <button
+          className="px-3 py-2 text-black hover:text-black hover:bg-orange-600 
+                     transition ease-in-out hover:scale-[1.1] duration-300 hover:font-bold hover:border-2 rounded-[32px]"
+          id="login"
+          onClick={() => navigate("/login")}
+        >
+          Login
         </button>
-        <button className="login-button" id="login" onClick={() => navigate("/login")}>
-          <span>Login</span>
-        </button>
-      </motion.div>
-    </AnimatePresence>
+      </div>
+    </div>
   );
 };
 

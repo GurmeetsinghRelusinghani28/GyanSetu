@@ -1,63 +1,63 @@
-import SpotlightCard from "../Components/SpotlightCard/SpotlightCard.jsx"
-import profImg from "../Components/Assets/conquor.jpg";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import "./Profile.css";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import profImg from "../Components/Assets/conquor.jpg";
 
 function Profile() {
   const navigate = useNavigate();
+
   return (
+    <div className="min-h-screen bg-gray-900 text-white px-4 py-8 flex flex-col items-center">
+      {/* Go Back Button */}
+      <div className="w-full max-w-2xl mb-6 flex items-center gap-2 cursor-pointer"
+           onClick={() => navigate("/main")}>
+        <ArrowBackIcon className="text-blue-400" fontSize="medium" />
+        <p className="text-blue-400 hover:underline">Go back</p>
+      </div>
 
-    <div>
-              <span className="translate-x-[51px] translate-y-[38px] flex flex-row"><ArrowBackIcon color="primary" fontSize="medium" />
-              &nbsp;<p onClick={()=>navigate("/main")} className=" text-blue-500">Go back</p></span>
+      {/* Profile Card */}
+      <div className="w-full max-w-2xl bg-gray-800 rounded-2xl shadow-xl p-6 sm:p-10 relative overflow-hidden">
+        {/* Glow Effect */}
+        <div className="absolute inset-0 bg-cyan-400 opacity-10 blur-3xl pointer-events-none"></div>
 
-    <div className=" flex justify-center items-center h-screen bg-black-900">
-      <SpotlightCard
-        className=" position-absolute -translate-y-[43px] custom-spotlight-card rounded-lg shadow-lg p-6 w-[500px]"
-        spotlightColor="rgba(0, 229, 255, 0.2)"
-      >
-        {/* Main container */}
-        <div className=" -translate-y-[43px] text-white space-y-6">
-          {/* Username & Profile Image in Horizontal Layout */}
-          <div style={{marginBottom: "5px" , display: "flex", flexDirection: "row", alignItems: "center"}} className= "flex flex-row" aria-orientation="vertical">
-            {/* Username Section */}
-            <div style={{marginTop: "10px",display: "flex", flexDirection: "column", marginRight: "10px"}} className="flex flex-col">
-              <h1 id="username" className="text-xl font-semibold">Username</h1>
-              <p id="name" className="text-lg text-gray-300">Bhieeeeeeeeshma_108</p>
-            </div>
-            {/* Profile Image (Right Side, Bigger) */}
-            <img
-              src={profImg}
-              alt="Profile"
-              className="profile-img w-32 h-32 object-cover rounded-full border-4 border-cyan-400 shadow-lg"
-            />
-          </div>
+        {/* Header Section */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
+          {/* Profile Image */}
+          <img
+            src={profImg}
+            alt="Profile"
+            className="w-32 h-32 sm:w-40 sm:h-40 object-cover rounded-full  shadow-lg"
+          />
 
-          {/* Religion Section */}
-          <div style={{marginBottom: "10px"}} className="text-left">
-            <h1 id="username" className="text-xl font-semibold">Religion</h1>
-            <p className="text-lg text-gray-300">Hindu</p>
-          </div>
-
-          {/* Bio Section (Full Width) */}
-          <div className="text-left">
-            <h1 id="username" className="text-xl font-semibold">Bio</h1>
-            <p className="text-gray-300">
-              I am a software engineer with 5 years of experience in the field.
-              I am passionate about technology and always eager to learn new things.
-            </p>
-          </div>
-
-          {/* Edit Profile Button (Aligned Properly Inside the Card) */}
-          <div className="flex justify-start">
-            <button style={{backgroundColor: "#000", color: "#fff" , borderRadius: "10px" }} className=" -translate-y-[21px] px-6 py-2">
-              Edit Profile
-            </button>
+          {/* User Info */}
+          <div className="flex flex-col items-center sm:items-start">
+            <h1 className="text-2xl font-bold text-cyan-400">
+              Bhishma_108
+            </h1>
+            <p className="text-gray-300 mt-1">Hindu</p>
           </div>
         </div>
-      </SpotlightCard>
-    </div>
+
+        {/* Bio Section */}
+        <div className="mt-8 relative z-10">
+          <h2 className="text-xl font-semibold text-cyan-300">Bio</h2>
+          <p className="text-gray-300 mt-2 leading-relaxed">
+            I am a software engineer with 5 years of experience in the field.
+            I am passionate about technology and always eager to learn new
+            things.
+          </p>
+        </div>
+
+        {/* Buttons */}
+        <div className="mt-8 flex justify-center sm:justify-start gap-4 relative z-10">
+          <button className="px-6 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-600 text-white shadow-md transition-all">
+            Edit Profile
+          </button>
+          <button className="px-6 py-2 rounded-xl border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-gray-900 shadow-md transition-all">
+            Message
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

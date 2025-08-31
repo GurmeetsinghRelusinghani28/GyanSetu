@@ -3,40 +3,53 @@ import { useNavigate } from "react-router-dom";
 import "./LoginVideo.css";
 
 const LoginVideo = ({ setShowVideo }) => {
-    const navigate = useNavigate();
-    const videoRef = useRef(null);
-    const [fadeOut, setFadeOut] = useState(false);
+  const navigate = useNavigate();
+  const videoRef = useRef(null);
+  const [fadeOut, setFadeOut] = useState(false);
 
-    useEffect(() => {
-        const handleVideoEnd = () => {
-            setFadeOut(true); // Start fade-out effect
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
 
-            setTimeout(() => {
-                setShowVideo(false); // Hide video
-                navigate("/religionselector"); // Redirect after fade-out
-            }, 1500); // Matches CSS transition duration
-        };
+    const handleVideoEnd = () => {
+      setFadeOut(true);
+      setTimeout(() => {
+        setShowVideo(false);
+        navigate("/religionselector");
+      }, 1500);
+    };
 
-        const video = videoRef.current;
-        if (video) {
-            video.addEventListener("ended", handleVideoEnd);
-        }
+    video.addEventListener("ended", handleVideoEnd);
 
-        return () => {
-            if (video) {
-                video.removeEventListener("ended", handleVideoEnd);
-            }
-        };
-    }, [navigate, setShowVideo]);
+    return () => {
+      video.removeEventListener("ended", handleVideoEnd);
+    };
+  }, [navigate, setShowVideo]);
 
-    return (
-        <div className={`back ${fadeOut ? "fade-out" : ""}`}>
-            <video ref={videoRef} autoPlay>
-                <source src="/Latest.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>
-        </div>
-    );
+  return (
+    <div className="relative w-screen h-screen flex items-center justify-center bg-black">
+      <div className="flex md:hidden absolute inset-0 items-center justify-center bg-black text-orange-500 text-2xl font-bold animate-pulse">
+        Loading...
+      </div>
+
+      <div
+        className={`back hidden md:flex ${
+          fadeOut ? "fade-out" : ""
+        } w-full h-full`}
+      >
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          preload="auto"
+          className="w-screen h-screen object-cover"
+        >
+          <source src="/Latest.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  );
 };
 
 export default LoginVideo;

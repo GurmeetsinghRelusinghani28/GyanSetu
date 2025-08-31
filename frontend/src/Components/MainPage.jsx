@@ -35,9 +35,10 @@ function MainPage() {
   return (
     <div className="w-full min-h-screen flex flex-col">
       {/* Header Section */}
-      <div className="fixed top-0 left-0 w-full z-[100] bg-black
-                py-4 sm:py-2 px-2 flex justify-between items-center">
-
+      <div
+        className="fixed top-0 left-0 w-full z-[100] bg-black
+                py-4 sm:py-2 px-2 flex justify-between items-center"
+      >
         {/* BhagwatGita Link */}
         <div className="flex flex-row justify-center">
           <a
@@ -62,14 +63,11 @@ function MainPage() {
 
         {/* Icons + Dropdown */}
         <div className="flex flex-row items-center gap-2 sm:gap-3 md:gap-4">
-          <ShoppingCartIcon className="text-blue-500" fontSize="medium" />
-          <FavoriteIcon className="text-red-600" fontSize="medium" />
           <div className="block sm:block">
             <AnimatedDropdown />
           </div>
         </div>
       </div>
-
 
       {/* Main Content */}
       <div className="flex flex-col lg:flex-row w-full h-auto lg:h-screen mt-30">
@@ -83,7 +81,6 @@ function MainPage() {
           <VideoSlider />
         </div>
       </div>
-
 
       {/* Sections */}
       {/* <Ecommerce /> */}

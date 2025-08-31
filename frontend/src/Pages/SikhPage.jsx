@@ -11,8 +11,7 @@ import ScrollVelocity from "../Components/MainPageComponents/ScrollVelocity.jsx"
 import TimeLineDemo2 from "../Components/SikhPageComponents/TimeLineDemo2.jsx";
 import AnimatedDropdown from "../Components/MainPageComponents/dropdown.jsx";
 
-function MuslimPage() {
-
+function SikhPage() {
   useEffect(() => {
     // Inject Botpress Webchat script dynamically
     const script1 = document.createElement("script");
@@ -35,9 +34,10 @@ function MuslimPage() {
   return (
     <div className="w-full min-h-screen flex flex-col">
       {/* Header Section */}
-      <div className="fixed top-0 left-0 w-full z-[100] bg-black 
-                      py-4 sm:py-2 px-2 flex justify-between items-center">
-
+      <div
+        className="fixed top-0 left-0 w-full z-[100] bg-black 
+                      py-4 sm:py-2 px-2 flex justify-between items-center"
+      >
         {/* Guru Granth Sahib Link */}
         <div className="flex flex-row items-center">
           <GradientText
@@ -61,8 +61,6 @@ function MuslimPage() {
 
         {/* Icons + Dropdown */}
         <div className="flex flex-row items-center gap-2 sm:gap-3 md:gap-4">
-          <ShoppingCartIcon className="text-blue-500" fontSize="medium" />
-          <FavoriteIcon className="text-red-600" fontSize="medium" />
           <div>
             <AnimatedDropdown />
           </div>

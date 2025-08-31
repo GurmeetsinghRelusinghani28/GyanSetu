@@ -34,9 +34,10 @@ function MuslimPage() {
   return (
     <div className="w-full min-h-screen flex flex-col">
       {/* Header Section */}
-      <div className="fixed top-0 left-0 w-full z-[100] bg-black
-                      py-4 sm:py-2 px-2 flex justify-between items-center">
-
+      <div
+        className="fixed top-0 left-0 w-full z-[100] bg-black
+                      py-4 sm:py-2 px-2 flex justify-between items-center"
+      >
         {/* Quran Link */}
         <div className="flex flex-row justify-center">
           <a
@@ -61,8 +62,6 @@ function MuslimPage() {
 
         {/* Icons + Dropdown */}
         <div className="flex flex-row items-center gap-2 sm:gap-3 md:gap-4 pr-2">
-          <ShoppingCartIcon className="text-blue-500" fontSize="medium" />
-          <FavoriteIcon className="text-red-600" fontSize="medium" />
           <div className="block sm:block">
             <AnimatedDropdown />
           </div>

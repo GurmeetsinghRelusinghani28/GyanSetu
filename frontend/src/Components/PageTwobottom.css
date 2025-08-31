@@ -7,7 +7,7 @@
     color: white;
     font-size: large;
     z-index: 100;
-    transform: translateY(-400px);
+    /* transform: translateY(-400px); */
 }
 
 .card-container {
@@ -19,7 +19,7 @@
     flex-direction: row;
     padding-top: 110px;
     background-color: black;
-    transform: translateY(-550px);
+    /* transform: translateY(-550px); */
 
 }
 
@@ -36,7 +36,7 @@
     justify-content: center;
     flex-direction: row;
     background-color: black;
-    transform: translateY(-600px);
+    /* transform: translateY(-600px); */
     padding-bottom: 170px;
 
 }
